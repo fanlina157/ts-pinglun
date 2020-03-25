@@ -42,7 +42,6 @@ class DataHelpler {
   }
   // 删除
   remove(ID: number | string): boolean {
-    debugger
     // 1.先取值
     let Data: any = this.readData()
     // 2.遍历Data
