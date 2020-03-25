@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .neirong,
+  .pinglun,
+  .addpinglun {
+    border: 1px solid #000;
+  }
+</style>
+
+<body style="width:50%;margin: 10px auto">
+  <div class="neirong">
+    <p>文章内容哈哈哈哈红红火火恍恍惚惚红红火火恍恍惚惚红红火火恍恍惚惚</p>
+  </div>
+  <div class="pinglun">
+    <ul id="ul">
+      <!-- <li>评论1112323 <span style="float:right;margin-right:30px;">删除</span> </li> -->
+    </ul>
+  </div>
+  <div class="addpinglun">
+    <textarea name="" id="textarea" cols="70" rows="10"></textarea>
+    <button id="add">新增评论</button>
+  </div>
+</body>
+<script src="./js/demo.js"></script>
+<script>
+  let dh = new DataHelpler('plData', 'id')
+
+
+  window.onload = function () {
+    init()
+  }
+
+  // 渲染评论列表
+  function init() {
+    let data = dh.readData()
+    let str = ''
+    if (data) {
+      data.forEach(item => {
+        str += `
+          <li>${item.content} <span  data-id="${item.id}" onclick="del(this)" style="float:right;margin-right:30px;cursor:pointer;">删除</span> </li>
+        `
+      });
+    } else {
+      str += `
+        <li> 暂无数据 </li>
+      `
+    }
+    document.querySelector('#ul').innerHTML = str
+  }
+
+  //  新增
+  document.querySelector('#add').onclick = function () {
+    dh.add(document.querySelector('#textarea').value)
+    init()
+    document.querySelector('#textarea').value = ''
+  }
+
+  // 删除功能
+  function del(element) {
+    dh.remove(element.getAttribute("data-id"))
+    init()
+  }
+
+</script>
+
+</html>
